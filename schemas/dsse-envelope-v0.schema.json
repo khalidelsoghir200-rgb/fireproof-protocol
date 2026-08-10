@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/action-receipt/v0/dsse-envelope.schema.json",
+  "title": "FireProof DSSE Envelope v0",
+  "type": "object",
+  "required": [
+    "payloadType",
+    "payload",
+    "signatures"
+  ],
+  "properties": {
+    "payloadType": {
+      "const": "application/vnd.fireproof.action-receipt.v0+json"
+    },
+    "payload": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 349528,
+      "pattern": "^(?:[A-Za-z0-9_-]+={0,2}|[A-Za-z0-9+/]+={0,2})$"
+    },
+    "signatures": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "sig"
+        ],
+        "properties": {
+          "keyid": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "sig": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 16384,
+            "pattern": "^(?:[A-Za-z0-9_-]+={0,2}|[A-Za-z0-9+/]+={0,2})$"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

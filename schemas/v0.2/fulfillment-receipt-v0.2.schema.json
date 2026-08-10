@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/action-receipt/v0.2/fulfillment-receipt.schema.json",
+  "title": "FireProof Fulfillment Receipt v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "receipt_id",
+    "issued_at",
+    "issuer",
+    "authority",
+    "intent",
+    "action_instance",
+    "outcome",
+    "evidence"
+  ],
+  "properties": {
+    "kind": {
+      "const": "fulfillment-receipt"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "receipt_id": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/uuidv7"
+    },
+    "issued_at": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+    },
+    "issuer": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/fulfillment_issuer"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_id",
+        "payload_sha256"
+      ],
+      "properties": {
+        "decision_id": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/uuidv7"
+        },
+        "payload_sha256": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/sha256"
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "commitment",
+        "scope_commitment"
+      ],
+      "properties": {
+        "profile": {
+          "const": "fireproof.http-json-write.v1"
+        },
+        "commitment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "alg",
+            "value"
+          ],
+          "properties": {
+            "alg": {
+              "const": "sha-256"
+            },
+            "value": {
+              "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/sha256"
+            }
+          }
+        },
+        "scope_commitment": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/sha256"
+        }
+      }
+    },
+    "action_instance": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/action_instance"
+    },
+    "outcome": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "result_digest"
+          ],
+          "properties": {
+            "status": {
+              "const": "succeeded"
+            },
+            "result_digest": {
+              "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/sha256"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "attempt_observation_digest",
+            "reason_code"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "failed",
+                "aborted",
+                "indeterminate"
+              ]
+            },
+            "attempt_observation_digest": {
+              "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/sha256"
+            },
+            "reason_code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/evidence_item"
+      }
+    }
+  }
+}

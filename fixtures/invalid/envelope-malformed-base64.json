@@ -1,0 +1,9 @@
+{
+  "payloadType": "application/vnd.fireproof.action-receipt.v0+json",
+  "payload": "not valid base64!",
+  "signatures": [
+    {
+      "sig": "AA=="
+    }
+  ]
+}

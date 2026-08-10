@@ -1,0 +1,71 @@
+{
+  "kind": "trust-manifest",
+  "schema_version": "0.1",
+  "manifest_id": "trust:tenant-demo",
+  "revision": 1,
+  "tenant_ref": "tenant:demo",
+  "issuer": {
+    "issuer_id": "issuer:tenant-trust"
+  },
+  "issued_at": "2026-07-15T12:00:00Z",
+  "not_before": "2026-07-15T12:00:00Z",
+  "expires_at": "2026-10-15T12:00:00Z",
+  "keys": [
+    {
+      "issuer_id": "issuer:tenant-policy",
+      "role": "authority",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "96ocBsw_CTclqMMPtiXOdJq1J5D_XIidv1BvCsNo2_B"
+      },
+      "jwk_thumbprint_sha256": "eYzRAh5XtOx7WmozsHIZqaLoofqFR1AoSToidqfG8EI",
+      "valid_from": "2026-07-15T12:00:00Z",
+      "valid_until": "2026-10-15T12:00:00Z",
+      "status": "active",
+      "allowed_scope_rule_ids": [
+        "scope:crm-prod-patch"
+      ]
+    },
+    {
+      "issuer_id": "issuer:tenant-crm-wrapper",
+      "role": "fulfillment",
+      "public_jwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "PQYkdGhue2_f5chJwZ91Tl4ZDgrmiB8eMR-fMTqu7cY"
+      },
+      "jwk_thumbprint_sha256": "2Wike4rvbi410n-RLCFjWuuB0gRk1PCmNQhwc5mhf5c",
+      "valid_from": "2026-07-15T12:00:00Z",
+      "valid_until": "2026-10-15T12:00:00Z",
+      "status": "active",
+      "allowed_scope_rule_ids": [
+        "scope:crm-prod-patch"
+      ]
+    }
+  ],
+  "scope_rules": [
+    {
+      "id": "scope:crm-prod-patch",
+      "tenant_ref": "tenant:demo",
+      "environment_ref": "env:production",
+      "target_ref": "target:registered-crm-write",
+      "operation_ref": "PATCH",
+      "arguments_profile": "fireproof.args.http-json-object.v1"
+    }
+  ],
+  "authority_fulfillment_relations": [
+    {
+      "id": "relation:crm-prod-execution",
+      "authority_issuer_id": "issuer:tenant-policy",
+      "fulfillment_issuer_ids": [
+        "issuer:tenant-crm-wrapper"
+      ],
+      "required_scope_rule_ids": [
+        "scope:crm-prod-patch"
+      ],
+      "require_distinct_issuer": true,
+      "require_distinct_key": true
+    }
+  ]
+}

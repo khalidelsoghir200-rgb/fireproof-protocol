@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json",
+  "title": "FireProof Action Receipt v0.2 Common Definitions",
+  "$defs": {
+    "uuidv7": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "utc_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "tenant_ref": {
+      "type": "string",
+      "pattern": "^tenant:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "principal_ref": {
+      "type": "string",
+      "pattern": "^principal:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "environment_ref": {
+      "type": "string",
+      "pattern": "^env:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "executor_ref": {
+      "type": "string",
+      "pattern": "^(?:agent|service):[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "target_ref": {
+      "type": "string",
+      "pattern": "^target:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "issuer_ref": {
+      "type": "string",
+      "pattern": "^issuer:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "trust_ref": {
+      "type": "string",
+      "pattern": "^trust:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "relation_ref": {
+      "type": "string",
+      "pattern": "^relation:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "scope_rule_ref": {
+      "type": "string",
+      "pattern": "^scope:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "delegation_ref": {
+      "type": "string",
+      "pattern": "^delegation:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "policy_ref": {
+      "type": "string",
+      "pattern": "^policy:[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "base64url_32_bytes": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{43}$"
+    },
+    "jwk_thumbprint_sha256": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{43}$"
+    },
+    "ed25519_public_jwk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kty",
+        "crv",
+        "x"
+      ],
+      "properties": {
+        "kty": {
+          "const": "OKP"
+        },
+        "crv": {
+          "const": "Ed25519"
+        },
+        "x": {
+          "$ref": "#/$defs/base64url_32_bytes"
+        }
+      }
+    },
+    "trust_manifest_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_id",
+        "revision",
+        "payload_sha256"
+      ],
+      "properties": {
+        "manifest_id": {
+          "$ref": "#/$defs/trust_ref"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "payload_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "authority_issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuer_id",
+        "role",
+        "trust_manifest"
+      ],
+      "properties": {
+        "issuer_id": {
+          "$ref": "#/$defs/issuer_ref"
+        },
+        "role": {
+          "const": "authority"
+        },
+        "trust_manifest": {
+          "$ref": "#/$defs/trust_manifest_ref"
+        }
+      }
+    },
+    "fulfillment_issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuer_id",
+        "role"
+      ],
+      "properties": {
+        "issuer_id": {
+          "$ref": "#/$defs/issuer_ref"
+        },
+        "role": {
+          "const": "fulfillment"
+        }
+      }
+    },
+    "public_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tenant_ref",
+        "principal_ref",
+        "environment_ref",
+        "executor_ref",
+        "transport",
+        "target_ref",
+        "operation_ref",
+        "arguments_profile"
+      ],
+      "properties": {
+        "tenant_ref": {
+          "$ref": "#/$defs/tenant_ref"
+        },
+        "principal_ref": {
+          "$ref": "#/$defs/principal_ref"
+        },
+        "environment_ref": {
+          "$ref": "#/$defs/environment_ref"
+        },
+        "executor_ref": {
+          "$ref": "#/$defs/executor_ref"
+        },
+        "transport": {
+          "const": "http"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/target_ref"
+        },
+        "operation_ref": {
+          "const": "PATCH"
+        },
+        "arguments_profile": {
+          "const": "fireproof.args.http-json-object.v1"
+        }
+      }
+    },
+    "intent_commitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "commitment",
+        "public_scope"
+      ],
+      "properties": {
+        "profile": {
+          "const": "fireproof.http-json-write.v1"
+        },
+        "commitment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "alg",
+            "value"
+          ],
+          "properties": {
+            "alg": {
+              "const": "sha-256"
+            },
+            "value": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        },
+        "public_scope": {
+          "$ref": "#/$defs/public_scope"
+        }
+      }
+    },
+    "action_instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "use_nonce_commitment",
+        "max_uses"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/uuidv7"
+        },
+        "use_nonce_commitment": {
+          "$ref": "#/$defs/sha256"
+        },
+        "max_uses": {
+          "const": 1
+        }
+      }
+    },
+    "evidence_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "artifact",
+            "system_log",
+            "external_receipt"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "format": "fireproof.receiver-acceptance.commitment-vectors/v0.1",
+  "profile": "fireproof.receiver-acceptance.erp-supplier-master/v0.1",
+  "hash": {
+    "algorithm": "sha-256",
+    "encoding": "lowercase-hex"
+  },
+  "canonicalization": "RFC 8785 JCS, UTF-8",
+  "data_classification": "synthetic-test-only",
+  "vectors": [
+    {
+      "id": "synthetic-supplier-payment-destination-v1-to-v2",
+      "description": "One synthetic supplier state transition; no real supplier, account, payment, tenant, or nonce.",
+      "inputs": {
+        "profile": "fireproof.receiver-acceptance.erp-supplier-master/v0.1",
+        "receiver_ref": "receiver:erp-supplier-master-sandbox",
+        "tenant_ref": "tenant:synthetic-demo",
+        "actor_ref": "actor:synthetic-001",
+        "supplier_ref": "supplier:synthetic-001",
+        "payment_destination_before": "synthetic-payment-destination-v1",
+        "payment_destination_after": "synthetic-payment-destination-v2",
+        "record_version_before": 1,
+        "record_version_after": 2,
+        "action_instance_id": "r2-vector-20260717-0001",
+        "use_nonce_base64url_unpadded": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8",
+        "use_nonce_decoded_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+      },
+      "preimages": {
+        "actor_ref_commitment": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-ACTOR-REF-V1\u0000",
+          "jcs_object": {
+            "actor_ref": "actor:synthetic-001"
+          }
+        },
+        "supplier_ref_commitment": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-SUPPLIER-REF-V1\u0000",
+          "jcs_object": {
+            "supplier_ref": "supplier:synthetic-001"
+          }
+        },
+        "payment_destination_before_commitment": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-PAYMENT-DESTINATION-V1\u0000",
+          "jcs_object": {
+            "payment_destination": "synthetic-payment-destination-v1"
+          }
+        },
+        "payment_destination_after_commitment": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-PAYMENT-DESTINATION-V1\u0000",
+          "jcs_object": {
+            "payment_destination": "synthetic-payment-destination-v2"
+          }
+        },
+        "use_nonce_commitment": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-USE-NONCE-V1\u0000",
+          "raw_bytes_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"
+        },
+        "supplier_state_before": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-SUPPLIER-STATE-V1\u0000",
+          "jcs_object": {
+            "profile": "fireproof.receiver-acceptance.erp-supplier-master/v0.1",
+            "receiver_ref": "receiver:erp-supplier-master-sandbox",
+            "tenant_ref": "tenant:synthetic-demo",
+            "supplier_ref_commitment": "4291cd38385c51c6f022b29836cd254c9047ea8767388bcfe1208824c1770fde",
+            "record_version": 1,
+            "payment_destination_commitment": "f324a37ca56d049e109e7baab01284e35a50076f73b5f0b6cd0270753ab7f830"
+          }
+        },
+        "supplier_state_after": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-SUPPLIER-STATE-V1\u0000",
+          "jcs_object": {
+            "profile": "fireproof.receiver-acceptance.erp-supplier-master/v0.1",
+            "receiver_ref": "receiver:erp-supplier-master-sandbox",
+            "tenant_ref": "tenant:synthetic-demo",
+            "supplier_ref_commitment": "4291cd38385c51c6f022b29836cd254c9047ea8767388bcfe1208824c1770fde",
+            "record_version": 2,
+            "payment_destination_commitment": "3de6350d2c352c15a7bbc5b2f4f9520251466b3f64c84dbdd064645cdcb7676e"
+          }
+        },
+        "terminal_action_key": {
+          "domain_tag_utf8_with_nul": "FIREPROOF-R2-TERMINAL-ACTION-V1\u0000",
+          "jcs_object": {
+            "receiver_ref": "receiver:erp-supplier-master-sandbox",
+            "tenant_ref": "tenant:synthetic-demo",
+            "action_instance_id": "r2-vector-20260717-0001"
+          }
+        }
+      },
+      "expected": {
+        "actor_ref_commitment": "13ae5ec16f29f7440c1125234461db92feb2513577e4f7c3227b1eeccd24613a",
+        "supplier_ref_commitment": "4291cd38385c51c6f022b29836cd254c9047ea8767388bcfe1208824c1770fde",
+        "payment_destination_before_commitment": "f324a37ca56d049e109e7baab01284e35a50076f73b5f0b6cd0270753ab7f830",
+        "payment_destination_after_commitment": "3de6350d2c352c15a7bbc5b2f4f9520251466b3f64c84dbdd064645cdcb7676e",
+        "use_nonce_commitment": "26973f339b1eca535e1275323e3ba0b694d5c32810b53f09397c2c39fa45ce98",
+        "supplier_state_before_commitment": "986d721c10d879c8a3cbc7e15ac6572d35cae52bb2a80ef345e3710411ce9fe1",
+        "supplier_state_after_commitment": "d199753a7f0a34799e303cdb70f3bbabb286cc888061bb27029ebfc911a12aa0",
+        "terminal_action_key": "ce110bff33eb7d9857f73580dda6ba57814c9ea888e6d8199c11f7389a13e8fa"
+      },
+      "semantic_links": {
+        "authority_expected_record_version": 1,
+        "authority_expected_state_commitment": "986d721c10d879c8a3cbc7e15ac6572d35cae52bb2a80ef345e3710411ce9fe1",
+        "fulfillment_record_version_before": 1,
+        "fulfillment_record_version_after": 2,
+        "fulfillment_before_state_commitment": "986d721c10d879c8a3cbc7e15ac6572d35cae52bb2a80ef345e3710411ce9fe1",
+        "fulfillment_after_state_commitment": "d199753a7f0a34799e303cdb70f3bbabb286cc888061bb27029ebfc911a12aa0"
+      }
+    }
+  ]
+}

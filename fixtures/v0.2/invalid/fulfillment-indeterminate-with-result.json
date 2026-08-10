@@ -1,0 +1,37 @@
+{
+  "kind": "fulfillment-receipt",
+  "schema_version": "0.2",
+  "receipt_id": "018f47a0-1235-7abc-8def-0123456789ab",
+  "issued_at": "2026-07-15T12:01:00Z",
+  "issuer": {
+    "issuer_id": "issuer:tenant-crm-wrapper",
+    "role": "fulfillment"
+  },
+  "authority": {
+    "decision_id": "018f47a0-1234-7abc-8def-0123456789ab",
+    "payload_sha256": "52f220aa624cb6bcfc57d8a7f80417ed6f33c35b329beb0fb971b9eec986ac9a"
+  },
+  "intent": {
+    "profile": "fireproof.http-json-write.v1",
+    "commitment": {
+      "alg": "sha-256",
+      "value": "65e4a8473db8ca4d56371c28c1fafcf6b0dc37c45993d781272d4cacbee5533f"
+    },
+    "scope_commitment": "67cb940ccf15a9dbe929c4b883e8300b2b3101c0574d22ab02de3f1d06b9557d"
+  },
+  "action_instance": {
+    "id": "018f47a0-1236-7abc-8def-0123456789ab",
+    "use_nonce_commitment": "4068740f7aef6e65da254d86b45b10d80fd2153e05e98bcc0ad84da47d42c8cf",
+    "max_uses": 1
+  },
+  "outcome": {
+    "status": "indeterminate",
+    "result_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "evidence": [
+    {
+      "kind": "artifact",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ]
+}

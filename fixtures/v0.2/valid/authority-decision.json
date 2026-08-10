@@ -1,0 +1,54 @@
+{
+  "kind": "authority-decision",
+  "schema_version": "0.2",
+  "receipt_id": "018f47a0-1234-7abc-8def-0123456789ab",
+  "issued_at": "2026-07-15T12:00:00Z",
+  "expires_at": "2026-07-15T12:10:00Z",
+  "issuer": {
+    "issuer_id": "issuer:tenant-policy",
+    "role": "authority",
+    "trust_manifest": {
+      "manifest_id": "trust:tenant-demo",
+      "revision": 1,
+      "payload_sha256": "8ab0e0c8ff51e7509065d4ebc400fe1c7e00e831a5c6068b04d9359b8d1d3560"
+    }
+  },
+  "actor": {
+    "agent_id": "agent:support-bot",
+    "agent_kind": "ai_agent"
+  },
+  "delegation": {
+    "delegator_ref": "principal:demo-owner",
+    "delegation_id": "delegation:demo-001"
+  },
+  "policy": {
+    "policy_id": "policy:crm-update",
+    "version": "2026-07-15",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "intent": {
+    "profile": "fireproof.http-json-write.v1",
+    "commitment": {
+      "alg": "sha-256",
+      "value": "65e4a8473db8ca4d56371c28c1fafcf6b0dc37c45993d781272d4cacbee5533f"
+    },
+    "public_scope": {
+      "tenant_ref": "tenant:demo",
+      "principal_ref": "principal:demo-owner",
+      "environment_ref": "env:production",
+      "executor_ref": "agent:support-bot",
+      "transport": "http",
+      "target_ref": "target:registered-crm-write",
+      "operation_ref": "PATCH",
+      "arguments_profile": "fireproof.args.http-json-object.v1"
+    }
+  },
+  "action_instance": {
+    "id": "018f47a0-1236-7abc-8def-0123456789ab",
+    "use_nonce_commitment": "4068740f7aef6e65da254d86b45b10d80fd2153e05e98bcc0ad84da47d42c8cf",
+    "max_uses": 1
+  },
+  "fulfillment_relation_id": "relation:crm-prod-execution",
+  "decision": "allow",
+  "reason_code": "policy-allow"
+}

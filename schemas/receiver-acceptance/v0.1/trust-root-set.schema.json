@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/trust-root-set.schema.json",
+  "title": "FireProof R2 Explicit Trust Root Set v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "keys"
+  ],
+  "properties": {
+    "format": {
+      "const": "fireproof.trust-root-set/v0.1"
+    },
+    "keys": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "jwk_thumbprint_sha256",
+          "public_jwk"
+        ],
+        "properties": {
+          "jwk_thumbprint_sha256": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/jwk_thumbprint_sha256"
+          },
+          "public_jwk": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ed25519_public_jwk"
+          }
+        }
+      }
+    }
+  },
+  "$comment": "The verifier recomputes every RFC 7638 JWK thumbprint and rejects duplicate key IDs; JSON Schema cannot express property-level uniqueness."
+}

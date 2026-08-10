@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/action-receipt/v0.2/authority-decision.schema.json",
+  "title": "FireProof Authority Decision v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "receipt_id",
+    "issued_at",
+    "expires_at",
+    "issuer",
+    "actor",
+    "delegation",
+    "policy",
+    "intent",
+    "action_instance",
+    "fulfillment_relation_id",
+    "decision"
+  ],
+  "properties": {
+    "kind": {
+      "const": "authority-decision"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "receipt_id": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/uuidv7"
+    },
+    "issued_at": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+    },
+    "expires_at": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+    },
+    "issuer": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/authority_issuer"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "agent_kind"
+      ],
+      "properties": {
+        "agent_id": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/executor_ref"
+        },
+        "agent_kind": {
+          "enum": [
+            "ai_agent",
+            "service"
+          ]
+        }
+      }
+    },
+    "delegation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delegator_ref",
+        "delegation_id"
+      ],
+      "properties": {
+        "delegator_ref": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/principal_ref"
+        },
+        "delegation_id": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/delegation_ref"
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "version",
+        "sha256"
+      ],
+      "properties": {
+        "policy_id": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/policy_ref"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,63}$"
+        },
+        "sha256": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/sha256"
+        }
+      }
+    },
+    "intent": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/intent_commitment"
+    },
+    "action_instance": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/action_instance"
+    },
+    "fulfillment_relation_id": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/relation_ref"
+    },
+    "decision": {
+      "enum": [
+        "allow",
+        "deny"
+      ]
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    }
+  }
+}

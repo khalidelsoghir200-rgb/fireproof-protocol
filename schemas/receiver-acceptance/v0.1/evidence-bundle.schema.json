@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/evidence-bundle.schema.json",
+  "title": "FireProof R2 Evidence Bundle v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "bundle_kind",
+    "profile",
+    "entries"
+  ],
+  "properties": {
+    "format": {
+      "const": "fireproof.evidence-bundle/v0.2"
+    },
+    "bundle_kind": {
+      "enum": [
+        "decision",
+        "action"
+      ]
+    },
+    "profile": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/profile"
+    },
+    "entries": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "path",
+              "media_type",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "const": "manifest"
+              },
+              "path": {
+                "const": "receiver-manifest.dsse.json"
+              },
+              "media_type": {
+                "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/dsse_media_type"
+              },
+              "sha256": {
+                "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "path",
+              "media_type",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "const": "authority"
+              },
+              "path": {
+                "const": "authority.dsse.json"
+              },
+              "media_type": {
+                "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/dsse_media_type"
+              },
+              "sha256": {
+                "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "path",
+              "media_type",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "const": "fulfillment"
+              },
+              "path": {
+                "const": "fulfillment.dsse.json"
+              },
+              "media_type": {
+                "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/dsse_media_type"
+              },
+              "sha256": {
+                "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "bundle_kind"
+        ],
+        "properties": {
+          "bundle_kind": {
+            "const": "decision"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entries": {
+            "minItems": 2,
+            "maxItems": 2,
+            "allOf": [
+              {
+                "contains": {
+                  "properties": {
+                    "role": {
+                      "const": "manifest"
+                    }
+                  },
+                  "required": [
+                    "role"
+                  ]
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "role": {
+                      "const": "authority"
+                    }
+                  },
+                  "required": [
+                    "role"
+                  ]
+                },
+                "minContains": 1,
+                "maxContains": 1
+              }
+            ]
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "entries": {
+            "minItems": 3,
+            "maxItems": 3,
+            "allOf": [
+              {
+                "contains": {
+                  "properties": {
+                    "role": {
+                      "const": "manifest"
+                    }
+                  },
+                  "required": [
+                    "role"
+                  ]
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "role": {
+                      "const": "authority"
+                    }
+                  },
+                  "required": [
+                    "role"
+                  ]
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "role": {
+                      "const": "fulfillment"
+                    }
+                  },
+                  "required": [
+                    "role"
+                  ]
+                },
+                "minContains": 1,
+                "maxContains": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "Directory inventory, file regularity, link prohibition, JCS bytes, and entry digest equality are verifier checks outside JSON Schema."
+}

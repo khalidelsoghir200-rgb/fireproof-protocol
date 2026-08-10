@@ -1,0 +1,10 @@
+{
+  "payloadType": "application/vnd.fireproof.action-receipt.v0+json",
+  "payload": "e30=",
+  "signatures": [
+    {
+      "keyid": "test:issuer-1",
+      "sig": "AA=="
+    }
+  ]
+}

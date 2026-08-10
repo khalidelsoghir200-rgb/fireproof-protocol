@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/receiver-trust-manifest.schema.json",
+  "title": "FireProof R2 Receiver Trust Manifest v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "profile",
+    "kind",
+    "receiver_ref",
+    "tenant_ref",
+    "environment_ref",
+    "manifest_version",
+    "authority_issuers",
+    "fulfillment_signers"
+  ],
+  "properties": {
+    "format": {
+      "const": "fireproof.receiver-trust-manifest/v0.1"
+    },
+    "profile": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/profile"
+    },
+    "kind": {
+      "const": "receiver_trust_manifest"
+    },
+    "receiver_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "tenant_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "environment_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "manifest_version": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/positive_integer"
+    },
+    "authority_issuers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "issuer_id",
+          "keyid",
+          "public_jwk",
+          "operation_ref",
+          "permitted_field"
+        ],
+        "properties": {
+          "issuer_id": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+          },
+          "keyid": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/jwk_thumbprint_sha256"
+          },
+          "public_jwk": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ed25519_public_jwk"
+          },
+          "operation_ref": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/operation_ref"
+          },
+          "permitted_field": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/permitted_field"
+          }
+        }
+      }
+    },
+    "fulfillment_signers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "signer_id",
+          "keyid",
+          "public_jwk"
+        ],
+        "properties": {
+          "signer_id": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+          },
+          "keyid": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/jwk_thumbprint_sha256"
+          },
+          "public_jwk": {
+            "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ed25519_public_jwk"
+          }
+        }
+      }
+    }
+  },
+  "$comment": "The verifier recomputes each key ID and rejects duplicate key IDs, duplicate issuer IDs, duplicate signer IDs, and root/Authority/Fulfillment key reuse. Active-manifest pinning remains receiver-local."
+}

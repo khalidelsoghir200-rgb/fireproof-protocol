@@ -1,0 +1,9 @@
+{
+  "keyid": "test:ed25519-v0-20260715",
+  "algorithm": "Ed25519",
+  "public_key_base64url": "aAZfYWV26MIT0OQCqXZ-lFQQFMxvhRXW9u5UcYLhhKc=",
+  "authority_signature_base64url": "ksyyG91Pu8k-jKhwp25uxL4g4tytb2ldnZBecwjFCnvF6jJKbfAokRo35XMklUBFoe4Ys1ym1p81FUPAL-ZlBg==",
+  "fulfillment_signature_base64url": "k4ItjY44TJrH_2cqyubm_YrWTv95jKChZLVc3PO7H0_zkbdVl3SIBqjs4HgCc27trr4PdwRWcl5yulzH1fkVAg==",
+  "purpose": "synthetic-test-only",
+  "private_key_persisted": false
+}

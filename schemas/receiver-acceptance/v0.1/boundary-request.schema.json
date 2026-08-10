@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/boundary-request.schema.json",
+  "title": "FireProof R2 Private Boundary Request v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "actor_ref",
+    "supplier_ref",
+    "expected_record_version",
+    "payment_destination",
+    "use_nonce_base64url"
+  ],
+  "properties": {
+    "actor_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ascii_identifier"
+    },
+    "supplier_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ascii_identifier"
+    },
+    "expected_record_version": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/positive_integer"
+    },
+    "payment_destination": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ascii_identifier"
+    },
+    "use_nonce_base64url": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/base64url_32_bytes"
+    }
+  },
+  "$comment": "The receiver must additionally enforce raw UTF-8 without BOM, <= 4 KiB, duplicate-name rejection, exact base64url decoding to 32 bytes, and configured-supplier admission before opening a transaction."
+}

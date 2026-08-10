@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/authority.schema.json",
+  "title": "FireProof R2 Receiver Authority v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "profile",
+    "receiver_ref",
+    "tenant_ref",
+    "environment_ref",
+    "kind",
+    "authority_issuer_id",
+    "actor_ref_commitment",
+    "operation_ref",
+    "supplier_ref_commitment",
+    "permitted_field",
+    "payment_destination_commitment",
+    "expected_record_version",
+    "expected_state_commitment",
+    "action_instance_id",
+    "use_nonce_commitment",
+    "receiver_manifest_payload_sha256",
+    "issued_at",
+    "expires_at",
+    "decision"
+  ],
+  "properties": {
+    "format": {
+      "const": "fireproof.receiver-authority/v0.1"
+    },
+    "profile": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/profile"
+    },
+    "receiver_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "tenant_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "environment_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "kind": {
+      "const": "authority"
+    },
+    "authority_issuer_id": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/scoped_ref"
+    },
+    "actor_ref_commitment": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+    },
+    "operation_ref": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/operation_ref"
+    },
+    "supplier_ref_commitment": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+    },
+    "permitted_field": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/permitted_field"
+    },
+    "payment_destination_commitment": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+    },
+    "expected_record_version": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/positive_integer"
+    },
+    "expected_state_commitment": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+    },
+    "action_instance_id": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/ascii_identifier"
+    },
+    "use_nonce_commitment": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+    },
+    "receiver_manifest_payload_sha256": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/sha256"
+    },
+    "issued_at": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/utc_timestamp"
+    },
+    "expires_at": {
+      "$ref": "https://schemas.fireproof.dev/receiver-acceptance/v0.1/common.schema.json#/$defs/utc_timestamp"
+    },
+    "decision": {
+      "enum": [
+        "allow",
+        "deny",
+        "approval_required"
+      ]
+    }
+  },
+  "$comment": "The verifier enforces issued_at < expires_at, DSSE keyid/authority_issuer_id admission, payload-digest linkage, and receiver-local active-manifest pinning."
+}

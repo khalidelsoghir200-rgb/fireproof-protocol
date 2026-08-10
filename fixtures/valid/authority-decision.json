@@ -1,0 +1,27 @@
+{
+  "kind": "authority-decision",
+  "schema_version": "0.1",
+  "receipt_id": "018f47a0-1234-7abc-8def-0123456789ab",
+  "issued_at": "2026-07-15T12:00:00Z",
+  "expires_at": "2026-07-15T12:10:00Z",
+  "actor": {
+    "agent_id": "agent:release-bot",
+    "agent_kind": "ai_agent"
+  },
+  "delegation": {
+    "delegator_id": "user:demo-owner",
+    "delegation_id": "delegation:demo-001"
+  },
+  "policy": {
+    "policy_id": "policy:production-deploy",
+    "version": "2026-07-15",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "action": {
+    "action_type": "http_write",
+    "action_name": "deploy.release",
+    "intent_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "decision": "allow",
+  "reason_code": "policy-allow"
+}

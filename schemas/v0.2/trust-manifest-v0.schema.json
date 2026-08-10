@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/action-receipt/v0.2/trust-manifest.schema.json",
+  "title": "FireProof Detached Tenant Trust Manifest v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "manifest_id",
+    "revision",
+    "tenant_ref",
+    "issuer",
+    "issued_at",
+    "not_before",
+    "expires_at",
+    "keys",
+    "scope_rules",
+    "authority_fulfillment_relations"
+  ],
+  "properties": {
+    "kind": {
+      "const": "trust-manifest"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "manifest_id": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/trust_ref"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "tenant_ref": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/tenant_ref"
+    },
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuer_id"
+      ],
+      "properties": {
+        "issuer_id": {
+          "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/issuer_ref"
+        }
+      }
+    },
+    "issued_at": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+    },
+    "not_before": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+    },
+    "expires_at": {
+      "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+    },
+    "keys": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "issuer_id",
+          "role",
+          "public_jwk",
+          "jwk_thumbprint_sha256",
+          "valid_from",
+          "valid_until",
+          "status",
+          "allowed_scope_rule_ids"
+        ],
+        "properties": {
+          "issuer_id": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/issuer_ref"
+          },
+          "role": {
+            "enum": [
+              "authority",
+              "fulfillment"
+            ]
+          },
+          "public_jwk": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/ed25519_public_jwk"
+          },
+          "jwk_thumbprint_sha256": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/jwk_thumbprint_sha256"
+          },
+          "valid_from": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+          },
+          "valid_until": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+          },
+          "invalid_from": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/utc_timestamp"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "retired",
+              "revoked"
+            ]
+          },
+          "allowed_scope_rule_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/scope_rule_ref"
+            }
+          }
+        }
+      }
+    },
+    "scope_rules": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tenant_ref",
+          "environment_ref",
+          "target_ref",
+          "operation_ref",
+          "arguments_profile"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/scope_rule_ref"
+          },
+          "tenant_ref": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/tenant_ref"
+          },
+          "environment_ref": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/environment_ref"
+          },
+          "target_ref": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/target_ref"
+          },
+          "operation_ref": {
+            "const": "PATCH"
+          },
+          "arguments_profile": {
+            "const": "fireproof.args.http-json-object.v1"
+          }
+        }
+      }
+    },
+    "authority_fulfillment_relations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "authority_issuer_id",
+          "fulfillment_issuer_ids",
+          "required_scope_rule_ids",
+          "require_distinct_issuer",
+          "require_distinct_key"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/relation_ref"
+          },
+          "authority_issuer_id": {
+            "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/issuer_ref"
+          },
+          "fulfillment_issuer_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/issuer_ref"
+            }
+          },
+          "required_scope_rule_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 32,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "https://schemas.fireproof.dev/action-receipt/v0.2/common.schema.json#/$defs/scope_rule_ref"
+            }
+          },
+          "require_distinct_issuer": {
+            "const": true
+          },
+          "require_distinct_key": {
+            "const": true
+          }
+        }
+      }
+    }
+  }
+}

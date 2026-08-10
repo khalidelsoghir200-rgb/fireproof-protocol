@@ -1,0 +1,9 @@
+{
+  "payloadType": "application/json",
+  "payload": "eyJraW5kIjoiYXV0aG9yaXR5LWRlY2lzaW9uIn0=",
+  "signatures": [
+    {
+      "sig": "AA=="
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "fulfillment-receipt",
+  "schema_version": "0.1",
+  "receipt_id": "018f47a0-1235-7abc-8def-0123456789ab",
+  "issued_at": "2026-07-15T12:01:00Z",
+  "authority": {
+    "decision_id": "018f47a0-1234-7abc-8def-0123456789ab"
+  },
+  "action": {
+    "intent_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "outcome": {
+    "status": "succeeded",
+    "result_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "evidence": [
+    {
+      "kind": "artifact",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ]
+}
