@@ -1,0 +1,47 @@
+name: Validate Protocol
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation tools
+        run: python -m pip install --upgrade jsonschema
+      - name: Validate JSON fixtures
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from jsonschema import Draft202012Validator
+
+          schemas = list(Path("schemas").rglob("*.json"))
+          if not schemas:
+              raise SystemExit("No JSON schemas found")
+
+          for path in schemas:
+              data = json.loads(path.read_text(encoding="utf-8"))
+              Draft202012Validator.check_schema(data)
+              print(f"schema OK: {path}")
+
+          fixtures = list(Path("fixtures").rglob("*.json"))
+          print(f"JSON fixtures discovered: {len(fixtures)}")
+          for path in fixtures:
+              json.loads(path.read_text(encoding="utf-8"))
+              print(f"JSON OK: {path}")
+          PY
+      - name: Check repository hygiene
+        run: |
+          test -f LICENSE
+          test -f README.md
+          git diff --check
