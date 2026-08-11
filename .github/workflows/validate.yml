@@ -1,4 +1,4 @@
-name: Validate Protocol
+name: Protocol CI
 
 on:
   push:
@@ -9,39 +9,71 @@ permissions:
 
 jobs:
   validate:
+    name: Schema & fixture validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install validation tools
-        run: python -m pip install --upgrade jsonschema
-      - name: Validate JSON fixtures
+          cache: pip
+
+      - name: Install validation dependencies
+        run: python -m pip install --upgrade jsonschema referencing
+
+      - name: Validate schemas and JSON documents
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           from jsonschema import Draft202012Validator
 
-          schemas = list(Path("schemas").rglob("*.json"))
-          if not schemas:
-              raise SystemExit("No JSON schemas found")
+          root = Path('.')
+          schema_paths = sorted((root / 'schemas').rglob('*.json'))
+          fixture_paths = sorted((root / 'fixtures').rglob('*.json'))
 
-          for path in schemas:
-              data = json.loads(path.read_text(encoding="utf-8"))
-              Draft202012Validator.check_schema(data)
-              print(f"schema OK: {path}")
+          if not schema_paths:
+              raise SystemExit('No JSON schemas found')
 
-          fixtures = list(Path("fixtures").rglob("*.json"))
-          print(f"JSON fixtures discovered: {len(fixtures)}")
-          for path in fixtures:
-              json.loads(path.read_text(encoding="utf-8"))
-              print(f"JSON OK: {path}")
+          schema_docs = {}
+          for path in schema_paths:
+              try:
+                  doc = json.loads(path.read_text(encoding='utf-8'))
+                  Draft202012Validator.check_schema(doc)
+                  schema_docs[path] = doc
+              except Exception as exc:
+                  raise SystemExit(f'SCHEMA INVALID: {path}: {exc}') from exc
+              print(f'SCHEMA OK: {path}')
+
+          for path in fixture_paths:
+              try:
+                  json.loads(path.read_text(encoding='utf-8'))
+              except Exception as exc:
+                  raise SystemExit(f'FIXTURE INVALID JSON: {path}: {exc}') from exc
+              print(f'FIXTURE JSON OK: {path}')
+
+          print(f'Validated {len(schema_paths)} schemas and {len(fixture_paths)} JSON fixtures.')
           PY
-      - name: Check repository hygiene
+
+      - name: Repository hygiene
         run: |
           test -f LICENSE
           test -f README.md
           git diff --check
+
+      - name: Reject obvious secret material
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -type f \
+            -not -path './.git/*' \
+            -not -path './.github/workflows/validate.yml' \
+            \( -name '*.pem' -o -name '*.key' -o -name '*.p12' -o -name '*.pfx' \) \
+            -print -quit | grep -q .; then
+            echo 'Potential private-key/certificate material found in repository.'
+            exit 1
+          fi
+          echo 'No obvious key/certificate files found.'
