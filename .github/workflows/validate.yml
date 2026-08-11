@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: pip
 
       - name: Install validation dependencies
         run: python -m pip install --upgrade jsonschema referencing
@@ -38,12 +37,10 @@ jobs:
           if not schema_paths:
               raise SystemExit('No JSON schemas found')
 
-          schema_docs = {}
           for path in schema_paths:
               try:
                   doc = json.loads(path.read_text(encoding='utf-8'))
                   Draft202012Validator.check_schema(doc)
-                  schema_docs[path] = doc
               except Exception as exc:
                   raise SystemExit(f'SCHEMA INVALID: {path}: {exc}') from exc
               print(f'SCHEMA OK: {path}')
