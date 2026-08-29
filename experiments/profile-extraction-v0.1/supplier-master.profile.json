@@ -1,0 +1,7 @@
+{
+  "profile_id": "fireproof.receiver-acceptance.erp-supplier-master/v0.1",
+  "operation_ref": "supplier.payment-destination.replace",
+  "permitted_field": "payment_destination",
+  "target_commitment_field": "supplier_ref_commitment",
+  "mutation_commitment_field": "payment_destination_commitment"
+}
