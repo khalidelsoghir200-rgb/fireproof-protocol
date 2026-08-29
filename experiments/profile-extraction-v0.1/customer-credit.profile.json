@@ -1,0 +1,7 @@
+{
+  "profile_id": "fireproof.receiver-acceptance.customer-credit/v0.1",
+  "operation_ref": "customer.credit-limit.replace",
+  "permitted_field": "credit_limit",
+  "target_commitment_field": "customer_ref_commitment",
+  "mutation_commitment_field": "credit_limit_commitment"
+}
