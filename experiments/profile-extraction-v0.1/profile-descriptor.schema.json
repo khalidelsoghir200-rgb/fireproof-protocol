@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.fireproof.dev/experiments/profile-descriptor/v0.1",
+  "title": "FireProof Experimental Receiver Profile Descriptor v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_id",
+    "operation_ref",
+    "permitted_field",
+    "target_commitment_field",
+    "mutation_commitment_field"
+  ],
+  "properties": {
+    "profile_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "operation_ref": {"type": "string", "minLength": 1, "maxLength": 128},
+    "permitted_field": {"type": "string", "minLength": 1, "maxLength": 128},
+    "target_commitment_field": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*_commitment$"
+    },
+    "mutation_commitment_field": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*_commitment$"
+    }
+  }
+}
